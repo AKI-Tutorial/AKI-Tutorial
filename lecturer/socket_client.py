@@ -17,6 +17,7 @@ def main():
         sock.connect((host, port))
     except:
         print 'ERROR: Cannnot connect'
+        sock.close()
         return
 
     while True:  
@@ -41,4 +42,5 @@ def main():
     return
 
 if __name__ == '__main__':
-    main()   
+    main()
+
