@@ -18,14 +18,14 @@ def main():
     sock.bind((host, port)) # portを開く
     sock.listen(5) # 接続を待つ
   
-    try:
-        while True: 
+    while True: 
+        try:
             conn, address = sock.accept() # listen中に申請が来たら受け付ける, connには相手の情報が入る
             print 'connected with...', address
             thread.start_new_thread(handler, (conn, address))
-  
-    except:  
-        sock.close()
+        except:  
+            sock.close()
+            break
 
 
 def handler(clientsock, addr):
