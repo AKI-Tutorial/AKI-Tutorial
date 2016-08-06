@@ -30,7 +30,7 @@ def main():
       
       else: # メッセージを送る
         sock.send(msg.format('b'))
-        print 'Complete :',sock.recv(4096)
+        print 'Complete :', sock.recv(4096)
 
     except: # 例外処理のとき
       sock.send('quit'.format('b'))  
