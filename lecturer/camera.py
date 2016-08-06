@@ -19,10 +19,10 @@ while(True):
     img = io.imread(uri)
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     
-    cv2.imshow('camera image',img)
-    cv2.imwrite('./image/image%05d.png'%count,img)
+    cv2.imshow('camera image', img)
+    cv2.imwrite('./image/image%05d.png' % count, img)
 
-    print 'FRAME =',count
+    print 'FRAME =', count
     count += 1
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
