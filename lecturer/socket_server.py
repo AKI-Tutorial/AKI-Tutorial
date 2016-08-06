@@ -17,6 +17,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = '192.168.2.2' # serverのIPアドレスとポート番号
 port = 4005
 
+
 def main():
   
   sock.bind((host, port)) # portを開く
@@ -27,13 +28,14 @@ def main():
     print 'connected with...', address
     thread.start_new_thread(handler, (conn, address))
 
+
 def handler(clientsock, addr):
 
   while True:
     msg = clientsock.recv(4096) # メッセージを受信 ,4096は最大のbufsize
 
     if msg == 'quit'.format('b'): # 通信終了
-      print 'End connection with...',addr
+      print 'End connection with...', addr
       sock.close()
       break
     
@@ -43,5 +45,4 @@ def handler(clientsock, addr):
 
   
 if __name__ == '__main__':
-    
-    main()
+  main()
