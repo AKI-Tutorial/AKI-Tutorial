@@ -8,33 +8,37 @@ import socket
 
 def main():
   
-  host = '192.168.0.13'
-  port = 4005
+    host = '192.168.0.13'
+    port = 4005
 
-  sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  sock.connect((host, port))
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-  while True:  
-    print 'please input message...'
+    try:
+        sock.connect((host, port))
+    except:
+        print 'ERROR: Cannnot connect'
+        return
 
-    try:      
-      msg = raw_input()
+    while True:  
 
-      if msg == 'quit': # 終了条件
-        sock.send('quit'.format('b'))
-        break
-      
-      else: # メッセージを送る
-        sock.send(msg.format('b'))
-        print 'Complete :', sock.recv(4096)
+        try:      
+            msg = raw_input()
 
-    except: # 例外処理が起きたら終了する
-      sock.send('quit'.format('b'))
-      break
+            if msg == 'quit': # 終了条件
+                sock.send('quit'.format('b'))
+                break
+        
+            else: # メッセージを送る
+                sock.send(msg.format('b'))
+                print 'Complete :', sock.recv(4096)
 
-  print 'End connection'
-  sock.close()
-  return
+        except: # 例外処理が起きたら終了する
+            sock.send('quit'.format('b'))
+            break
+
+    print 'End connection'
+    sock.close()
+    return
 
 if __name__ == '__main__':
-  main()
+    main()   

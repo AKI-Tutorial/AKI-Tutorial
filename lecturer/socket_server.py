@@ -15,31 +15,36 @@ port = 4005
 
 def main():
   
-  sock.bind((host, port)) # portを開く
-  sock.listen(5) # 接続を待つ
+    sock.bind((host, port)) # portを開く
+    sock.listen(5) # 接続を待つ
   
-  while True: 
-    conn, address = sock.accept() # listen中に申請が来たら受け付ける, connには相手の情報が入る
-    print 'connected with...', address
-    thread.start_new_thread(handler, (conn, address))
-  sock.close()
+    try:
+        while True: 
+            conn, address = sock.accept() # listen中に申請が来たら受け付ける, connには相手の情報が入る
+            print 'connected with...', address
+            thread.start_new_thread(handler, (conn, address))
+  
+    except:  
+        sock.close()
 
 
 def handler(clientsock, addr):
 
-  while True:
-    msg = clientsock.recv(4096) # メッセージを受信
+    while True:
+        msg = clientsock.recv(4096) # メッセージを受信
 
-    if msg == 'quit'.format('b'): # 通信終了      
-      break
+        if msg == 'quit'.format('b'): # 通信終了      
+            break
     
-    else: # メッセージを表示、送り返す
-      print msg
-      clientsock.send(msg) 
+        else: # メッセージを表示、送り返す
+            print msg
+            clientsock.send(msg) 
 
-  print 'End connection with...', addr
-  clientsock.close()
+    print 'End connection with...', addr
+    clientsock.close()
 
-  
+    
 if __name__ == '__main__':
-  main()
+    main()
+
+
