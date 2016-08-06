@@ -2,46 +2,43 @@
 '''
 @author Kan Mayoshi <k_mayoshi@ac.jaxa.jp>
 Usage: $ python socket_server.py
-
-・どう問題にするか
-  関数を選択肢として与えておいて、それと別でブロック図みたいのを見せて、その通りに組ませるとか？
 '''
 
 import socket
 import thread
 
-# socketの形式の指定
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# AF_INET->IPv4を使用する # SOCK_STREAM->TCP/IPを用いたSTREAM型のソケット
 
-host = '192.168.2.2' # serverのIPアドレスとポート番号
+host = '192.168.0.13' # サーバーのIPアドレス
 port = 4005
 
 
 def main():
   
   sock.bind((host, port)) # portを開く
-  sock.listen(5) # 接続を待つ、backlog=5
+  sock.listen(5) # 接続を待つ
   
   while True: 
     conn, address = sock.accept() # listen中に申請が来たら受け付ける, connには相手の情報が入る
     print 'connected with...', address
     thread.start_new_thread(handler, (conn, address))
+  sock.close()
 
 
 def handler(clientsock, addr):
 
   while True:
-    msg = clientsock.recv(4096) # メッセージを受信 ,4096は最大のbufsize
+    msg = clientsock.recv(4096) # メッセージを受信
 
-    if msg == 'quit'.format('b'): # 通信終了
-      print 'End connection with...', addr
-      sock.close()
+    if msg == 'quit'.format('b'): # 通信終了      
       break
     
-    else:
+    else: # メッセージを表示、送り返す
       print msg
-      clientsock.send(msg) # メッセージを送り返す
+      clientsock.send(msg) 
+
+  print 'End connection with...', addr
+  clientsock.close()
 
   
 if __name__ == '__main__':
