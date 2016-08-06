@@ -25,7 +25,7 @@ while(True):
     print 'FRAME =', count
     count += 1
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(33) & 0xFF == ord('q'):
         print 'quit'
         break
 
