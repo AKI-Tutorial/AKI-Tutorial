@@ -43,6 +43,7 @@ def main():
 
             if msg == 'quit': # 終了条件
                 sock.send('quit'.format('b'))
+ 		print sock.recv(4096)
                 break
         
             else: # 
@@ -50,7 +51,8 @@ def main():
                 print 'Complete :', sock.recv(4096)
 
         except: # 例外処理が起きたら終了する
-            sock.send('quit'.format('b'))
+            sock.send('quit'.format('b'))	
+	    print sock.recv(4096)
             break
 
 
