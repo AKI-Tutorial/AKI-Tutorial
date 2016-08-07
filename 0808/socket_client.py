@@ -27,6 +27,7 @@ def main():
 
             if msg == 'quit': # 終了条件
                 sock.send('quit'.format('b'))
+                print sock.recv(4096)
                 break
         
             else: # メッセージを送る
@@ -35,6 +36,7 @@ def main():
 
         except: # 例外処理が起きたら終了する
             sock.send('quit'.format('b'))
+            print sock.recv(4096)            
             break
 
     print 'End connection'

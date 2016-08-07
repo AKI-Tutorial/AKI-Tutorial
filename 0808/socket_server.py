@@ -34,6 +34,7 @@ def handler(clientsock, addr):
         msg = clientsock.recv(4096) # メッセージを受信
 
         if msg == 'quit'.format('b'): # 通信終了      
+            clientsock.send(aa) 
             break
     
         else: # メッセージを表示、送り返す
@@ -43,6 +44,15 @@ def handler(clientsock, addr):
     print 'End connection with...', addr
     clientsock.close()
 
+aa = str(
+'''
+　 / )))　　　
+`／ イ　　　　(((ヽ
+|　(＼　∧＿∧　｜　)
+ヽ　ヽ`(´･ω･)／ノ/
+　＼ |　⌒Ｙ⌒　/ /
+　 ｜ヽ　 ｜　 ﾉ／
+''')    
     
 if __name__ == '__main__':
     main()
