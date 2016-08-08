@@ -30,7 +30,7 @@ def raw2volt(raw):
 
 def main():
     ### setup the client ###
-    ipaddr = '192.168.201.17'
+    ipaddr = '192.168.201.21'
     port   = 502
     print 'Connecting to', (ipaddr, port)
     client = ModbusTcpClient(ipaddr, port=port)
@@ -38,7 +38,7 @@ def main():
     ### fetch data ###
     try:
         reg = client.read_input_registers(0, 8)  # data request
-        vlt = raw2volt(reg1.registers)  # convert bit to voltage (-10 -- 10[V])
+        vlt = raw2volt(reg.registers)  # convert bit to voltage (-10 -- 10[V])
     except:
         print 'Data fetch error. Finishing...'
         client.close()
