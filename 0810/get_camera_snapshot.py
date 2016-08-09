@@ -22,7 +22,7 @@ def get_snapshot(uri):
 
 
 def main():
-    ### Camera setting ###
+    ### URI setting ###
     uri = 'http://49.212.135.60/p/79/75279/20973301.jpg'  # DUMMY
 
     ### get a single image from camera ###
