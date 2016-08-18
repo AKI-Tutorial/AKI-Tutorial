@@ -61,7 +61,7 @@ class FakeMotor(threading.Thread):
 
     def set_pwm_duty(self, duty=0):
         '''
-            Set PWM Duty
+            Set PWM Duty (-100 ... 100[%])
         '''
         self.duty = duty
         self.duty = min(max(self.duty, -100), 100)  # bound range to -100..100
@@ -81,6 +81,9 @@ class FakeMotor(threading.Thread):
 
 
     def show_profiles(self):
+        '''
+            Plot time series data for angle and velocity
+        '''
         ti  = self.time_list
         ang = self.angle_list
         vel = self.velocity_list
@@ -106,6 +109,9 @@ class FakeMotor(threading.Thread):
 
 
     def show_animation(self):
+        '''
+            Show animation for motor behavior
+        '''
         ti  = self.time_list
         ang = self.angle_list
         vel = self.velocity_list
