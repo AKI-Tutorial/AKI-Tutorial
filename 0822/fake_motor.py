@@ -5,8 +5,8 @@ See main() for example use.
 @author  Kyohei Otsu <kyon@ac.jaxa.jp>
 @date    2016-08-18
 
-Usage:
-    $ python controller.py
+Usage of sample code:
+    $ python fake_motor.py
 """
 
 import time
