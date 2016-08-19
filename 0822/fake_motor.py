@@ -35,12 +35,15 @@ class FakeMotor(threading.Thread):
         ### Motor state ###
         self.time_list = 1.0 * np.arange(self.max_tics) / self.system_freq
         self.angle_list = np.nan * np.ones(self.max_tics)  # [deg]
-        self.velocity_list = np.nan * np.ones(self.max_tics)  # [deg / sec]
+        self.velocity_list = np.nan * np.ones(self.max_tics)  # [deg/sec]
         self.angle_list[0] = 0
         self.velocity_list[0] = 0
         self.p = 0  # pointer to current data
+        self.epoch_t = 0  # arrival time of step input [sec]
+        self.epoch_w = 0  # angular velocity on step input arrival [deg/sec]
 
         ### PWM setting ###
+        self.amplitude = 30  # [V]
         self.duty = 0  # -100...100 [%]
 
 
@@ -48,14 +51,29 @@ class FakeMotor(threading.Thread):
         '''
             Start main loop
         '''
-        k = 3
+
+        def response(u, t, T=0.01, K=10):
+            ''' 
+                Imitate motor response (1st order)
+                Input:
+                    u: Input [V]
+                    t: Time from PWM command [s]
+                Parameters:
+                    T: Time constant (mechanical) [s]
+                    K: Gain constant [deg/sV]
+                Returns:
+                    Output angular velocity [deg/s]
+            '''
+            return K * (1 - np.exp(-t / T)) * (u - self.epoch_w / K) + self.epoch_w
+
         for i in range(1, self.max_tics):
             ### update ###
-            self.p = i
-            self.velocity_list[i] = k * self.duty + random.gauss(0, 0.1 * abs(self.duty)) # fake motor
+            self.p = i  # data idx
+            u = self.amplitude * self.duty * 0.01  # input voltage
+            self.velocity_list[i] = response(u, self.get_time() - self.epoch_t)
             self.angle_list[i] = self.angle_list[i - 1] + 1. * self.velocity_list[i] / self.system_freq
             
-            ### adjust frequency ###
+            ### adjust sampling rate ###
             wait_time = 1. / self.system_freq
             time.sleep(0.8 * wait_time)
             
@@ -65,8 +83,10 @@ class FakeMotor(threading.Thread):
             Set PWM Duty (-100 ... 100[%])
         '''
         self.duty = duty
-        self.duty = min(max(self.duty, -100), 100)  # bound range to -100..100
-        print 't={:.2f}:  Set PWM duty = {:.1f}'.format(self.get_time(), self.duty)
+        self.duty = min(max(self.duty, -100), 100)  # limit input between -100..100
+        self.epoch_t = self.get_time()
+        self.epoch_w = self.get_velocity()
+        print 't={:.2f}:  Set PWM duty = {:.1f}'.format(self.epoch_t, self.duty)
 
 
     def get_time(self):
