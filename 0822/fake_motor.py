@@ -52,7 +52,7 @@ class FakeMotor(threading.Thread):
         for i in range(1, self.max_tics):
             ### update ###
             self.p = i
-            self.velocity_list[i] = k * self.duty + random.gauss(0, 5) # fake motor
+            self.velocity_list[i] = k * self.duty + random.gauss(0, 0.1 * abs(self.duty)) # fake motor
             self.angle_list[i] = self.angle_list[i - 1] + 1. * self.velocity_list[i] / self.system_freq
             
             ### adjust frequency ###
