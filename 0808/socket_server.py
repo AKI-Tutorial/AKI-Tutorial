@@ -6,6 +6,7 @@ Usage: $ python socket_server.py
 
 import socket
 import thread
+import random
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -38,7 +39,9 @@ def handler(clientsock, addr):
             break
     
         else: # メッセージを表示、送り返す
-            print msg
+            print msg, 'from {}'.format(addr)
+            if not random.randint(1, 10) % 10:  # for fun
+                msg = 'HAHAHA, YOUR COMPUTER IS HACKED!!'
             clientsock.send(msg) 
 
     print 'End connection with...', addr
