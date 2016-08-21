@@ -48,7 +48,7 @@ def main():
         
             else: # 
                 sock.send(msg.format('b'))
-                print 'Complete :', sock.recv(4096)
+                print 'Server says:', sock.recv(4096)
 
         except: # 例外処理が起きたら終了する
             sock.send('quit'.format('b'))	
