@@ -45,9 +45,14 @@ def capsulate(cmd):
 ## Sample code
 if __name__ == '__main__':
 
-    cmd = 'd20'
-    cmd_byte = capsulate(cmd)
+    # function to show byte stream as a hex string
+    def convert_hex_string(h):
+        return ' '.join("{:02x}".format(ord(c)) for c in h)
+
+    # main
+    cmd = 'd20'  # command to be sent
+    cmd_byte = capsulate(cmd)  # pack the command to byte stream
 
     print 'Original:', cmd
-    print 'Packet  :', ' '.join("{:02x}".format(ord(c)) for c in cmd_byte)
+    print 'Packet  :', convert_hex_string(cmd_byte)
 
