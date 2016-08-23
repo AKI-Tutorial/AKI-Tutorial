@@ -3,13 +3,13 @@
 CC = g++
 CFLAGS = -Wall
 
-# Libruary
+# Library
 LIBS = -lmesasr
 LFLAGS = #-L/usr/lib  -I/.
 
 # Target
-OBJS=lidar_test.o
-TARGET=lidar_test
+OBJS = lidar_test.o
+TARGET = lidar_test
 
 # プログラム作成
 all: $(TARGET)

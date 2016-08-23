@@ -13,14 +13,14 @@ Usage:
     $ ./lidar_test
 */
 
-#include "stdio.h"
-#include "stdlib.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <fstream>
-#include "libMesaSR.h"
+#include <libMesaSR.h>
 
 int main() {
 
-  CMesaDevice* srCam=0;
+  CMesaDevice* srCam = 0;
   int res;
 
   //--------- Connect LIDAR ---------
@@ -40,8 +40,8 @@ int main() {
 
   //--------- Get Rows & Cols ---------
   int rows, cols;
-  rows=SR_GetRows(srCam);
-  cols=SR_GetCols(srCam);
+  rows = SR_GetRows(srCam);
+  cols = SR_GetCols(srCam);
   printf("rows: %d cols: %d \n", rows, cols);
 
   //--------- Transform sphirical coodinate to xyz coordinate(Do not edit)---------
@@ -53,9 +53,8 @@ int main() {
 
   //--------- Output only first 5 data(Do not edit) ---------
   printf("Distance data (x,y,z), with mm unit:\n");
-  int j;
-  for(j=0; j<5; j++) { 
-  printf("%d %d %d\n", X[j], Y[j], Z[j]);
+  for(int j = 0; j < 5; j++) { 
+    printf("%d %d %d\n", X[j], Y[j], Z[j]);
   }
 
   //--------- Output into PLY file(Do not edit) ---------
@@ -71,8 +70,7 @@ int main() {
   ofs << "end_header"  << std::endl;
 
   // write contents
-  int i;
-  for(i=0; i<rows*cols-1; i++) {
+  for(int i = 0; i < rows * cols - 1; i++) {
     ofs << X[i] << " " << Y[i] << " " << Z[i] << std::endl;
   }
 
