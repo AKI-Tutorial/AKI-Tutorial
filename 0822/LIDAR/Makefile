@@ -15,11 +15,10 @@ TARGET = lidar_test
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) -o $(TARGET) $(OBJS) $(LFLAGS) $(LIBS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(LFLAGS) $(LIBS)
 
 # Clean
 clean:
 	rm -f *.o
-	rm *~
 	rm $(TARGET)
 
